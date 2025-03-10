@@ -1,14 +1,76 @@
 
 
-function charNumber(){
+function charNumber(str) {
+    // let counter = 0;
+    // const splitted = str.split(' ')
+
+    // splitted.forEach( piece => {
+    //     counter += piece.length;
+    // });
+
+    // return counter;
+
+    const noSpaces = str.replaceAll(' ', '');
+    return noSpaces.length;
+}
+
+function wordNumber(str) {
+
+    return str.trim()
+        .replaceAll("’", ' ')
+        .replaceAll("\n", " ")
+        .split(' ').length;
 
 }
 
-function wordNumber(){
-    
+
+function wordNumberRgx(str){
+    const rgx =/\p{L}+/gu
+    const words = str.match(rgx);
+    return words.length;
 }
 
-function wordCount(){
+function wordCount(str) {
+
+    const punctuation = [',', '.', ':', ";"]
+
+    // const wordArray = str.trim()
+    //     .replaceAll("’", ' ')
+    //     .replaceAll("\n", " ")
+    //     // .replaceAll(',', '')
+    //     // .replaceAll('.', '')
+    //     // .replaceAll(';', '')
+    //     // .replaceAll(':', '')
+    //     // .replaceAll(';', '')
+    //     .split(' ').map(word => {
+    //         punctuation.forEach(element => {
+    //             word = word.split(element).join().toLowerCase()
+    //         });
+    //         return word;
+    //     });
+
+    const arrayOfChars  = str.split('');
+    const charsWithoutPunctuation = arrayOfChars.filter(c => !punctuation.includes(c));
+    const strWithoutPunctuation = charsWithoutPunctuation.join('');
+    const strWithoutApostrophe = strWithoutPunctuation.replaceAll("’", ' ');
+    const strWithoutNewLine = strWithoutApostrophe.replaceAll("\n", " ");
+    const wordArray = strWithoutNewLine.split(' ');
+
+    console.log(wordArray)
+
+
+    let wordMap = {};
+
+    for (const word of wordArray) {
+        const actualString = word.toLowerCase();
+        if (wordMap[actualString]) {
+            wordMap[actualString]++
+        } else {
+            wordMap[actualString] = 1;
+        }
+    }
+
+    return wordMap;
 
 }
 
@@ -55,3 +117,7 @@ console.log(wNumb); //number
 
 const wCount = wordCount(incipit)
 console.log(wCount); //{parola: numero di occorrenze}
+
+
+const wNumb2 = wordNumberRgx(incipit)
+console.log(wNumb2); //number
